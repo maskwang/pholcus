@@ -21,12 +21,13 @@ import (
 	"log"
 	"mime"
 	"net/http"
-	"net/http/cookiejar"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
+
+	httpdo "github.com/546669204/golang-http-do"
 )
 
 type (
@@ -37,7 +38,7 @@ type (
 		PhantomjsFile string            //Phantomjs完整文件名
 		TempJsDir     string            //临时js存放目录
 		jsFileMap     map[string]string //已存在的js文件
-		CookieJar     *cookiejar.Jar
+		CookieJar     *httpdo.Jar
 	}
 	// Response 用于解析Phantomjs的响应内容
 	Response struct {
@@ -59,7 +60,7 @@ type (
 	}
 )
 
-func NewPhantom(phantomjsFile, tempJsDir string, jar ...*cookiejar.Jar) Surfer {
+func NewPhantom(phantomjsFile, tempJsDir string, jar ...*httpdo.Jar) Surfer {
 	phantom := &Phantom{
 		PhantomjsFile: phantomjsFile,
 		TempJsDir:     tempJsDir,
@@ -68,7 +69,7 @@ func NewPhantom(phantomjsFile, tempJsDir string, jar ...*cookiejar.Jar) Surfer {
 	if len(jar) != 0 {
 		phantom.CookieJar = jar[0]
 	} else {
-		phantom.CookieJar, _ = cookiejar.New(nil)
+		phantom.CookieJar = &httpdo.Jar{}
 	}
 	if !filepath.IsAbs(phantom.PhantomjsFile) {
 		phantom.PhantomjsFile, _ = filepath.Abs(phantom.PhantomjsFile)

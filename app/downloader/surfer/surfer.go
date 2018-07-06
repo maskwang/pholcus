@@ -17,8 +17,9 @@ package surfer
 
 import (
 	"net/http"
-	"net/http/cookiejar"
 	"sync"
+
+	httpdo "github.com/546669204/golang-http-do"
 )
 
 var (
@@ -29,7 +30,7 @@ var (
 	tempJsDir    = "./tmp"
 	// phantomjsFile = filepath.Clean(path.Join(os.Getenv("GOPATH"), `/src/github.com/henrylee2cn/surfer/phantomjs/phantomjs`))
 	phantomjsFile = `./phantomjs`
-	cookieJar, _  = cookiejar.New(nil)
+	cookieJar  = &httpdo.Jar{}
 )
 
 func Download(req Request) (resp *http.Response, err error) {

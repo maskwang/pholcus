@@ -25,7 +25,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/henrylee2cn/pholcus/app/downloader/surfer/agent"
+	httpdo "github.com/546669204/golang-http-do"
+	"github.com/maskwang/pholcus/app/downloader/surfer/agent"
 )
 
 type Param struct {
@@ -35,6 +36,7 @@ type Param struct {
 	body          io.Reader
 	header        http.Header
 	enableCookie  bool
+	cookieJar     *httpdo.Jar
 	dialTimeout   time.Duration
 	connTimeout   time.Duration
 	tryTimes      int
@@ -90,6 +92,7 @@ func NewParam(req Request) (param *Param, err error) {
 	}
 
 	param.enableCookie = req.GetEnableCookie()
+	param.cookieJar = req.GetCookieJar()
 
 	if len(param.header.Get("User-Agent")) == 0 {
 		if param.enableCookie {

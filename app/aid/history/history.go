@@ -8,13 +8,13 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/henrylee2cn/pholcus/app/downloader/request"
-	"github.com/henrylee2cn/pholcus/common/mgo"
-	"github.com/henrylee2cn/pholcus/common/mysql"
-	"github.com/henrylee2cn/pholcus/common/pool"
-	"github.com/henrylee2cn/pholcus/common/util"
-	"github.com/henrylee2cn/pholcus/config"
-	"github.com/henrylee2cn/pholcus/logs"
+	"github.com/maskwang/pholcus/app/downloader/request"
+	"github.com/maskwang/pholcus/common/mgo"
+	"github.com/maskwang/pholcus/common/mysql"
+	"github.com/maskwang/pholcus/common/pool"
+	"github.com/maskwang/pholcus/common/util"
+	"github.com/maskwang/pholcus/config"
+	"github.com/maskwang/pholcus/logs"
 )
 
 type (

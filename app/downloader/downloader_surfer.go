@@ -3,12 +3,12 @@ package downloader
 import (
 	"errors"
 	"net/http"
-	"net/http/cookiejar"
 
-	"github.com/henrylee2cn/pholcus/app/downloader/request"
-	"github.com/henrylee2cn/pholcus/app/downloader/surfer"
-	"github.com/henrylee2cn/pholcus/app/spider"
-	"github.com/henrylee2cn/pholcus/config"
+	"github.com/maskwang/pholcus/app/downloader/request"
+	"github.com/maskwang/pholcus/app/downloader/surfer"
+	"github.com/maskwang/pholcus/app/spider"
+	"github.com/maskwang/pholcus/config"
+	httpdo "github.com/546669204/golang-http-do"
 )
 
 type Surfer struct {
@@ -17,7 +17,7 @@ type Surfer struct {
 }
 
 var (
-	cookieJar, _     = cookiejar.New(nil)
+	cookieJar    = &httpdo.Jar{}
 	SurferDownloader = &Surfer{
 		surf:    surfer.New(cookieJar),
 		phantom: surfer.NewPhantom(config.PHANTOMJS, config.PHANTOMJS_TEMP, cookieJar),

@@ -23,26 +23,28 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
-	"net/http/cookiejar"
 	"strings"
 	"time"
 
+	"log"
+
+	httpdo "github.com/546669204/golang-http-do"
 	"github.com/henrylee2cn/goutil"
-	"github.com/henrylee2cn/pholcus/app/downloader/surfer/agent"
+	"github.com/maskwang/pholcus/app/downloader/surfer/agent"
 )
 
 // Surf is the default Download implementation.
 type Surf struct {
-	CookieJar *cookiejar.Jar
+	CookieJar *httpdo.Jar
 }
 
 // New 创建一个Surf下载器
-func New(jar ...*cookiejar.Jar) Surfer {
+func New(jar ...*httpdo.Jar) Surfer {
 	s := new(Surf)
 	if len(jar) != 0 {
 		s.CookieJar = jar[0]
 	} else {
-		s.CookieJar, _ = cookiejar.New(nil)
+		s.CookieJar = &httpdo.Jar{}
 	}
 	return s
 }
@@ -116,7 +118,12 @@ func (self *Surf) buildClient(param *Param) *http.Client {
 	}
 
 	if param.enableCookie {
-		client.Jar = self.CookieJar
+		if param.cookieJar != nil {
+			log.Println("=====|||||||||||=====>", param.cookieJar)
+			client.Jar = param.cookieJar
+		} else {
+			client.Jar = self.CookieJar
+		}
 	}
 
 	transport := &http.Transport{

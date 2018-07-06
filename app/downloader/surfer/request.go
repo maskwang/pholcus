@@ -19,6 +19,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	httpdo "github.com/546669204/golang-http-do"
 )
 
 type (
@@ -33,6 +35,7 @@ type (
 		GetHeader() http.Header
 		// enable http cookies
 		GetEnableCookie() bool
+		GetCookieJar() *httpdo.Jar
 		// dial tcp: i/o timeout
 		GetDialTimeout() time.Duration
 		// WSARecv tcp: i/o timeout
@@ -59,6 +62,7 @@ type (
 		Header http.Header
 		// 是否使用cookies，在Spider的EnableCookie设置
 		EnableCookie bool
+		CookieJar    *httpdo.Jar
 		// POST values
 		PostData string
 		// dial tcp: i/o timeout
@@ -159,6 +163,12 @@ func (self *DefaultRequest) GetHeader() http.Header {
 func (self *DefaultRequest) GetEnableCookie() bool {
 	self.once.Do(self.prepare)
 	return self.EnableCookie
+}
+
+// get cookie jar
+func (self *DefaultRequest) GetCookieJar() *httpdo.Jar {
+	self.once.Do(self.prepare)
+	return self.CookieJar
 }
 
 // dial tcp: i/o timeout

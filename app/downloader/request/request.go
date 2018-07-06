@@ -10,17 +10,19 @@ import (
 	"sync"
 	"time"
 
-	"github.com/henrylee2cn/pholcus/common/util"
+	httpdo "github.com/546669204/golang-http-do"
+	"github.com/maskwang/pholcus/common/util"
 )
 
 // Request represents object waiting for being crawled.
 type Request struct {
-	Spider        string          //规则名，自动设置，禁止人为填写
-	Url           string          //目标URL，必须设置
-	Rule          string          //用于解析响应的规则节点名，必须设置
-	Method        string          //GET POST POST-M HEAD
-	Header        http.Header     //请求头信息
-	EnableCookie  bool            //是否使用cookies，在Spider的EnableCookie设置
+	Spider        string      //规则名，自动设置，禁止人为填写
+	Url           string      //目标URL，必须设置
+	Rule          string      //用于解析响应的规则节点名，必须设置
+	Method        string      //GET POST POST-M HEAD
+	Header        http.Header //请求头信息
+	EnableCookie  bool        //是否使用cookies，在Spider的EnableCookie设置
+	CookieJar     *httpdo.Jar
 	PostData      string          //POST values
 	DialTimeout   time.Duration   //创建连接超时 dial tcp: i/o timeout
 	ConnTimeout   time.Duration   //连接状态超时 WSARecv tcp: i/o timeout
@@ -208,6 +210,15 @@ func (self *Request) GetEnableCookie() bool {
 
 func (self *Request) SetEnableCookie(enableCookie bool) *Request {
 	self.EnableCookie = enableCookie
+	return self
+}
+
+func (self *Request) GetCookieJar() *httpdo.Jar {
+	return self.CookieJar
+}
+
+func (self *Request) SetCookieJar(cookiejar *httpdo.Jar) *Request {
+	self.CookieJar = cookiejar
 	return self
 }
 

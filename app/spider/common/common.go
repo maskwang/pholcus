@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/henrylee2cn/pholcus/common/goquery"
-	"github.com/henrylee2cn/pholcus/common/mahonia"
-	"github.com/henrylee2cn/pholcus/common/ping"
+	"github.com/maskwang/pholcus/common/goquery"
+	"github.com/maskwang/pholcus/common/mahonia"
+	"github.com/maskwang/pholcus/common/ping"
 )
 
 // 清除标签
